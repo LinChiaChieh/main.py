@@ -1,0 +1,149 @@
+// CS1410 - Assignment 03
+#include <iostream>
+#include <iomanip>
+
+using namespace std;
+
+//TODO 1: ShapeKind Enumeration goes here
+enum ShapeKind{
+  CIRCLE,
+  SQUARE,
+  RECTANGLE
+};
+
+//TODO 2: Shape Structure goes here
+struct Shape{
+  ShapeKind kind;
+  double length ;
+  double width ;
+};
+
+
+// Function prototypes and definitions
+double area(Shape shapeVar);
+
+//TODO 3: area() definition goes here
+double area(Shape shapeVar){
+
+  if(shapeVar.kind == ShapeKind::CIRCLE){
+      double radius = shapeVar.length *0.5; 
+        return 3.14 * radius * radius; 
+  }
+    else if(shapeVar.kind == ShapeKind::RECTANGLE){
+      return shapeVar.length * shapeVar.width; 
+  }
+    else if(shapeVar.kind == ShapeKind::SQUARE){
+      return shapeVar.length * shapeVar.length; 
+  }
+  return 0;
+}
+double perimeter(Shape);
+//TODO 4: perimeter() definition goes here
+double perimeter(Shape shapeVar){
+  if(shapeVar.kind == ShapeKind::CIRCLE){
+    double radius = shapeVar.length*0.5; 
+      return 2*(3.14)*radius; 
+  }
+  else if(shapeVar.kind == ShapeKind::RECTANGLE){
+    return 2*(shapeVar.length+shapeVar.width); 
+  }
+  else if(shapeVar.kind == ShapeKind::SQUARE){
+    return 4*shapeVar.length;
+  }
+  return 0;
+}
+
+string nameOf(Shape);
+//TODO 5: nameOf() definition goes here
+string nameOf(Shape shapeVar){
+  if(shapeVar.kind == ShapeKind::CIRCLE){
+    return "Circle"; 
+  }
+  else if(shapeVar.kind == ShapeKind::RECTANGLE){
+      return "Rectangle";
+  }
+  else if(shapeVar.kind == ShapeKind::SQUARE){
+      return "Square";
+  }
+}
+
+void promptAndReadInputFor(Shape&);
+//TODO 6: promptAndReadInputFor() definition goes here
+void promptAndReadInputFor(Shape &shapeVar){
+  if(shapeVar.kind == ShapeKind::CIRCLE){
+    cout<<"Enter the diameter of circle : ";
+    double diameter;
+    cin>>diameter; 
+    shapeVar.length = diameter;
+    shapeVar.width = diameter;
+  }
+  else if(shapeVar.kind == ShapeKind::RECTANGLE){
+    double length,width;
+    cout<<"Enter the length of rectangle : ";
+    cin>>length >> width;
+   
+    shapeVar.length = length;
+    shapeVar.width = width;
+    if(length == width){
+    shapeVar.kind = ShapeKind::SQUARE;
+    }
+  }
+    else if(shapeVar.kind == ShapeKind::SQUARE){
+    double length;
+    cout<<"Enter length of square : ";
+    cin>>length;
+    shapeVar.length = length;
+    shapeVar.width = length;
+    }
+}
+
+// The main function
+int main() {
+
+// Shape objects
+
+Shape circle = { ShapeKind::CIRCLE, 0, 0 };
+
+//TODO 7: define two more shape objects: a square and and a rectangle 
+Shape square = { ShapeKind::SQUARE , 0, 0};
+Shape rectangle = { ShapeKind::RECTANGLE, 0, 0};
+
+//TODO 8: Call the promptAndReadInputFor() function on each of the above three shapes
+promptAndReadInputFor(circle);
+promptAndReadInputFor(square);
+promptAndReadInputFor(rectangle);
+
+//TODO 9: Print a out a report of these shapes in a table-like format
+cout<<right<<setw(20)<<"SHAPE";
+cout<<right<<setw(20)<<"WIDTH";
+cout<<right<<setw(20)<<"HEIGHT";
+cout<<right<<setw(20)<<"PERIMETER";
+cout<<right<<setw(20)<<"AREA";
+
+cout<<"\n";
+
+cout<<right<<setw(20)<<nameOf(circle);
+cout<<right<<setw(20)<<circle.width;
+cout<<right<<setw(20)<<circle.length;
+cout<<right<<setw(20)<<perimeter(circle);
+cout<<right<<setw(20)<<area(circle);
+
+cout<<"\n"; 
+
+cout<<right<<setw(20)<<nameOf(square);
+cout<<right<<setw(20)<<square.width;
+cout<<right<<setw(20)<<square.length;
+cout<<right<<setw(20)<<perimeter(square);
+cout<<right<<setw(20)<<area(square);
+
+cout<<"\n"; 
+
+cout<<right<<setw(20)<<nameOf(rectangle);
+cout<<right<<setw(20)<<rectangle.width;
+cout<<right<<setw(20)<<rectangle.length;
+cout<<right<<setw(20)<<perimeter(rectangle);
+cout<<right<<setw(20)<<area(rectangle);
+
+return 0;
+
+}
