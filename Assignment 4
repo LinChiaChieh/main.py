@@ -1,0 +1,119 @@
+// CS1410 - Assignment 04
+
+#include <iostream>
+#include <cstdlib>
+#include <sstream>
+#include <cstdlib>
+#include <ctime>
+#define MAX 100
+
+using namespace std;
+enum DieSide { // Lists the sides of a die
+    ONE, TWO, THREE, FOUR, FIVE, SIX
+};
+struct HisBar { // Represents a bar in a histogram
+    int count;
+    DieSide label;
+};
+void rolldie(HisBar h[], int n = 1)
+{
+    srand(time(NULL));
+    for (int x = 0; x < n; x++)
+    {
+        h[x].count = rand() % 6 + 1;
+        h[x].label = (DieSide)h[x].count;
+    }
+}
+
+string getHistogram(HisBar h[], int n)
+{
+    int frequency[6] = { 0, 0, 0, 0, 0, 0 };
+    string histogram;
+    string label[] = { "One: ", "Two: ", "Three: ", "Four: ", "Five: ", "Six: " };
+    for (int x = 0; x < n; x++)
+    {
+        switch (h[x].label - 1)
+        {
+        case ONE:
+            frequency[ONE]++;
+            break;
+        case TWO:
+            frequency[TWO]++;
+            break;
+        case THREE:
+            frequency[THREE]++;
+            break;
+        case FOUR:
+            frequency[FOUR]++;
+            break;
+        case FIVE:
+            frequency[FIVE]++;
+            break;
+        case SIX:
+            frequency[SIX]++;
+            break;
+        }
+    }
+
+    for (int x = 0; x < 6; x++) {
+        stringstream ss;
+        ss << frequency[x];
+        histogram += ss.str();
+        histogram += " ";
+        histogram += label[x];
+        for (int y = 0; y < frequency[x]; y++)
+            histogram += '*';
+        histogram = histogram + "\n";
+    }
+
+    return histogram;
+}
+
+void resetHistogram(HisBar histogram[], int n) // Function to reset the histogram
+{
+    for (int i = 0; i < n; ++i)
+    {
+        histogram[i].count = 0;
+        histogram[i].label = (DieSide)0;
+    }
+}
+
+int menu()
+{
+    int ch;
+    cout << "\n DICE ROLLING SIMULATION";
+    cout << "\n ==============================";
+    cout << "\n 1. Roll dice.";
+    cout << "\n 2. Display histogram.";
+    cout << "\n 3. Reset histogram.";
+    cout << "\n 4. Quit program.";
+    cout << "\n\n Enter your choice: ";
+    cin >> ch;
+    return ch;
+}
+int main()
+{
+    HisBar histogram[MAX] = { 0, (DieSide)0 }; //intial
+    do
+    {
+        switch (menu())
+        {
+        case 1:
+            rolldie(histogram, MAX); //calling the rolldie function 
+            break;
+        case 2:
+            cout << getHistogram(histogram, MAX); // calling the print function 
+            break;
+        case 3:
+            resetHistogram(histogram, MAX); // calling the function to reset 
+            cout << "\nHistogram reset completed! \n";
+            cout << getHistogram(histogram, MAX); //printing the Histogram
+            break;
+        case 4:
+            exit(0); //exit form the switch case
+        default:
+            cout << "\n Invalid choice."; // if input was other than 1,2,3,4 then default
+            break;
+        }
+    } while (true);
+}
