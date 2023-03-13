@@ -1,0 +1,109 @@
+// Here is the Loan.h file:
+#ifndef _LOAN_H_
+#define _LOAN_H_
+
+#include <iostream>
+#include <string>
+#include <sstream>
+
+class Loan {
+private:
+    std::string bankName;
+    std::string borrowerName;
+    double annualInterestRate;
+    int numberOfYears;
+    double loanAmount;
+
+public:
+    Loan();
+    Loan(const std::string& bn, const std::string& brn, double air, int ny, double la);
+    Loan(const std::string& bn, const std::string& brn, double air, double la);
+    Loan(const std::string& bn, const std::string& brn, double air, int ny);
+
+    ~Loan(){}
+
+    const std::string& getBankName() const;
+    void setBankName(const std::string& bn);
+
+    const std::string& getBorrowerName() const;
+    void setBorrowerName(const std::string& brn);
+
+    double getAnnualInterestRate() const;
+    void setAnnualInterestRate(double air);
+
+    int getNumberOfYears() const;
+    void setNumberOfYears(int ny);
+
+    double getLoanAmount() const;
+    void setLoanAmount(double la);
+
+    std::string str() const;
+};
+
+# endif
+
+// Here is the loan.cpp file:
+#include "loan.h"
+#include <sstream>
+Loan::Loan() : bankName(""), borrowerName(""), annualInterestRate(0), numberOfYears(0), loanAmount(0) {}
+
+Loan::Loan(const std::string& bn, const std::string& brn, double air, int ny, double la)
+    : bankName(bn), borrowerName(brn), annualInterestRate(air), numberOfYears(ny), loanAmount(la) {}
+
+Loan::Loan(const std::string& bn, const std::string& brn, double air, double la)
+    : Loan(bn, brn, air, 1, la) {}
+
+Loan::Loan(const std::string& bn, const std::string& brn, double air, int ny)
+    : Loan(bn, brn, air, ny, 0) {}
+
+Loan::~Loan() {}
+
+const std::string& Loan::getBankName() const {
+    return bankName;
+}
+
+void Loan::setBankName(const std::string& bn) {
+    bankName = bn;
+}
+
+const std::string& Loan::getBorrowerName() const {
+    return borrowerName;
+}
+
+void Loan::setBorrowerName(const std::string& brn) {
+    borrowerName = brn;
+}
+
+double Loan::getAnnualInterestRate() const {
+    return annualInterestRate;
+}
+
+void Loan::setAnnualInterestRate(double air) {
+    annualInterestRate = air;
+}
+
+int Loan::getNumberOfYears() const {
+    return numberOfYears;
+}
+
+void Loan::setNumberOfYears(int ny) {
+    numberOfYears = ny;
+}
+
+double Loan::getLoanAmount() const {
+    return loanAmount;
+}
+
+void Loan::setLoanAmount(double la) {
+    loanAmount = la;
+}
+
+std::string Loan::str() const {
+    std::stringstream sout;
+    sout << "Bank Name: " << bankName << std::endl;
+    sout << "Borrower Name: " << borrowerName << std::endl;
+    sout << "Annual Interest Rate: " << annualInterestRate << "%" << std::endl;
+    sout << "Number of Years: " << numberOfYears << std::endl;
+    sout << "Loan Amount: $" << loanAmount << std::endl;
+    return sout.str();
+}
